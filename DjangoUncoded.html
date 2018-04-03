@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Django Uncoded: The best battle royal game</title>
+  <meta charset="utf-8">
+  <script src="Test%20Game_files/jquery-1.js"></script>
+  <style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+
+  <script>
+
+  /* global $, alert */
+
+  //DjangoUnchained game starts
+
+
+
+  $(document).ready( function() {
+    "use strict";
+
+    // These variable track the state of this "game"
+    var playerItems = [];
+    var points = 0;
+
+    // Simulates "game over" when a score would be sent
+    $("#submit_score").click( function () {
+      var msg = {
+        "messageType": "SCORE",
+        "score": parseFloat($("#score").text())
+      };
+      window.parent.postMessage(msg, "*");
+    });
+
+    // Sends this game's state to the service.
+    // The format of the game state is decided
+    // by the game
+    $("#save").click( function () {
+      var msg = {
+        "messageType": "SAVE",
+        "gameState": {
+          "playerItems": playerItems,
+          "score": parseFloat($("#score").text())
+        }
+      };
+      window.parent.postMessage(msg, "*");
+    });
+
+    // Sends a request to the service for a
+    // state to be sent, if there is one.
+    $("#load").click( function () {
+      var msg = {
+        "messageType": "LOAD_REQUEST",
+      };
+      window.parent.postMessage(msg, "*");
+    });
+
+    // Listen incoming messages, if the messageType
+    // is LOAD then the game state will be loaded.
+    // Note that no checking is done, whether the
+    // gameState in the incoming message contains
+    // correct information.
+    //
+    // Also handles any errors that the service
+    // wants to send (displays them as an alert).
+    window.addEventListener("message", function(evt) {
+      if(evt.data.messageType === "LOAD") {
+        playerItems = evt.data.gameState.playerItems;
+        points = evt.data.gameState.score;
+        $("#score").text(points);
+        updateItems();
+      } else if (evt.data.messageType === "ERROR") {
+        alert(evt.data.info);
+      }
+    });
+
+    // This is part of the mechanics of the "game"
+    // it does not relate to the messaging with the
+    // service.
+    //
+    // Adds an item to the players inventory
+    $("#add_item").click( function () {
+      playerItems.push("A rock");
+      $("#new_item").val("");
+      updateItems();
+    });
+
+    $("#add_points").click(function () {
+      points += 10;
+      $("#score").text(points);
+    });
+
+    // This is part of the mechanics of the "game"
+    // it does not relate to the messaging with the
+    // service.
+    //
+    // "Redraws" the inventory of the player. Used
+    // when items are added or the game is loaded
+    function updateItems() {
+      $("#item_list").html("");
+      for (var i = playerItems.length - 1; i >= 0; i--) {
+        $("#item_list").append("<li>" + playerItems[i] + "</li>");
+      }
+    }
+
+    // Request the service to set the resolution of the
+    // iframe correspondingly
+    var message =  {
+      messageType: "SETTING",
+      options: {
+      	"width": 700, //Integer
+        "height": 300 //Integer
+        }
+    };
+    window.parent.postMessage(message, "*");
+
+  });
+
+
+
+  </script>
+</head>
+<body onload="startGame()">
+  <script>
+var myGamePiece;
+var myObstacles = [];
+
+
+function startGame() {
+    document.addEventListener("keydown", keyPush);
+    //myGamePiece = new component(30, 30, "djangoUnchained_files/django.jpeg", 10, 120, "image");
+    var myDimension = 1200
+    myStorm = new component(1.2*myDimension,0.8*myDimension, "blue", 0.2*myDimension, 0.05*myDimension,"storm");
+    myGamePiece = new component(30, 30, "red", 0.5*myDimension, 0.25*myDimension);
+    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myFinalScore = new component("60px", "Consolas", "black", 500, 100, "text");
+    myTime = new component("30px", "Consolas", "black", 80, 40, "text");
+    myNextStorm = new component("30px", "Consolas", "black", 80, 80, "text");
+    myHealth = new component("30px", "Consolas", "black", 480, 40, "text");
+    myObstacles.push(new component(20, 20, "green", 300, 120));
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 1200;
+        this.canvas.height = 600;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.myScore = 0;
+        this.myHealth = 10;
+        this.nextStorm = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    crash : function() {
+        this.myScore = this.myScore +1;
+    },
+    stop : function() {
+
+        clearInterval(this.interval);
+
+        //this.updateGameArea();
+    }
+}
+
+
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.x = x;
+    this.y = y;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (type == "image") {
+            ctx.drawImage(this.image,
+                this.x,
+                this.y,
+                this.width, this.height);
+        }
+        else if (this.type == "obstacle"){
+          ctx.fillStyle = color;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        }
+        else if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        }
+        else if (this.type == "storm") {
+
+          ctx.beginPath();
+          ctx.lineWidth="5";
+          ctx.strokeStyle="blue"; // Green path
+          //left
+          ctx.moveTo(this.x,this.y);
+          ctx.lineTo(this.x,this.y+this.height);
+          //bottom
+          ctx.lineTo(this.x+this.width,this.y+this.height);
+          //right
+          ctx.lineTo(this.x+this.width,this.y);
+          //top
+          ctx.lineTo(this.x,this.y);
+          ctx.stroke(); // Draw it
+          //ctx.beginPath();
+          //ctx.arc(this.x, this.y, 0.5*Math.sqrt(Math.pow(this.width,2)+ Math.pow(this.height,2))  , 0, 2*Math.PI);
+          //ctx.stroke();
+        }
+        else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.speedX= 0;
+    this.speedY= 0;
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) ||
+               (mytop > otherbottom) ||
+               (myright < otherleft) ||
+               (myleft > otherright)) {
+           crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+
+  var x, y;
+  for (i = 0; i < myObstacles.length; i += 1) {
+       if (myGamePiece.crashWith(myObstacles[i])) {
+          myObstacles[i].x= Math.floor(Math.random()*(myGameArea.canvas.width- 2* myObstacles[i].width)); //Math.random()*myGameArea.width;
+          myObstacles[i].y= Math.floor(Math.random()*(myGameArea.canvas.height- 2*myObstacles[i].height)); //Math.random()*myGameArea.height;
+
+          myGameArea.crash();
+          return;
+       }
+   }
+    if (myGameArea.frameNo == 1 || everyinterval(50)) {
+        x = Math.floor(Math.random()*(myGameArea.canvas.width)- 2* myObstacles[0].width);
+        y = Math.floor(Math.random()*(myGameArea.canvas.height)- 2*myObstacles[0].height);
+        myObstacles.push(new component(20, 20, "green", x, y));
+    }
+
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(myGameArea.nextStorm)) {
+        myGameArea.nextStorm =myGameArea.nextStorm + 1500;
+        x= Math.floor(Math.random()*(myGameArea.canvas.width- myStorm.width));
+        y= Math.floor(Math.random()*(myGameArea.canvas.height- myStorm.height));
+        if(x<0 ){
+          myStorm.x =200;
+        } else{
+          myStorm.x = x;
+        }
+        if(y<0 ){
+          myStorm.y =50;
+        } else{
+          myStorm.y = y;
+        }
+
+
+        myStorm.width = 0.5* myStorm.width;
+        myStorm.height = 0.5*myStorm.height;
+        //x = myGameArea.canvas.width;
+        //y = myGameArea.canvas.height - 200
+        //myObstacles.push(new component(10, 200, "green", x, y));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+      //myObstacles[i].x += -1;
+       myObstacles[i].update();
+   }
+   if (everyinterval(50)) {
+       if (!myGamePiece.crashWith(myStorm)) {
+           myGameArea.myHealth = myGameArea.myHealth -1;
+          if (myGameArea.myHealth == 0 ){
+            //myScore.x = 0.2*myGameArea.width;
+            myFinalScore.text="YOUR FINAL SCORE: " + myGameArea.myScore;
+            myFinalScore.y = 0.5*myGameArea.canvas.height;
+            myFinalScore.x = 0.2*myGameArea.canvas.width;
+
+
+            myFinalScore.update();
+            myGameArea.stop();
+
+          }
+       }
+   }
+    myStorm.update();
+
+    myGamePiece.newPos();
+    myGamePiece.update();
+    //myObstacle.update();
+    myScore.text="SCORE: " + myGameArea.myScore;
+    myScore.update();
+    myHealth.text="HEALTH: " + myGameArea.myHealth;
+    myHealth.update();
+    myTime.text="TIME: " + myGameArea.frameNo / 10;
+    myTime.update();
+    myNextStorm.text="NEXT STORM AT: " + myGameArea.nextStorm / 10;
+    myNextStorm.update();
+
+}
+
+function moveup() {
+    myGamePiece.speedY = -2;
+
+
+}
+
+function movedown() {
+    myGamePiece.speedY = 2;
+
+}
+
+function moveleft() {
+    myGamePiece.speedX = -2;
+
+}
+
+function moveright() {
+    myGamePiece.speedX = 2;
+
+}
+
+function clearmove() {
+    myGamePiece.speedX = 0;
+    myGamePiece.speedY = 0;
+}
+function keyPush(evt) {
+
+    switch(evt.keyCode) {
+          case 37:
+              //xv=-1;yx=0;
+              myGamePiece.speedX = -8;
+              break;
+          case 38:
+              //xv=0;yx=-1;
+              myGamePiece.speedY = -8;
+              break;
+          case 39:
+              //xv=1;yx=0;
+              myGamePiece.speedX = 8;
+              break;
+          case 40:
+              //xv=0;yx=1;
+              myGamePiece.speedY = 8;
+              break;
+      }
+
+}
+
+
+  </script>
+  <div style="text-align:center;width:480px;">
+  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
+  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
+  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+</div>
+
+<!--
+  <button id="add_item">Add a stone to backbag</button>
+  <button id="add_points">Add 10 points</button>
+
+
+
+  <h3>Backbag</h3>
+  <ul id="item_list"></ul>
+  <div><span id="score">0</span> Points</div>
+
+  <button id="submit_score">Submit score</button><br>
+
+  <button id="save">Save</button>
+  <button id="load">Load</button>
+
+-->
+
+
+</body></html>
