@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 4</title>
+  <title>Test Game 3</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -26,7 +26,7 @@
       $("#submit_score").click( function () {
         var msg = {
           "messageType": "SCORE",
-          "score": myGameArea.myScore
+          "score": parseFloat($("#score").text())
         };
         window.parent.postMessage(msg, "*");
       });
@@ -231,6 +231,10 @@ function component(width, height, color, x, y, type) {
     this.y += this.speedY;
     this.speedX= 0;
     this.speedY= 0;
+    var xloc = this.x;
+    $("#playerLocationX").text(xloc);
+    var yloc = this.y;
+    $("#playerLocationY").text(yloc);
     }
     this.crashWith = function(otherobj) {
         var myleft = this.x;
@@ -391,7 +395,7 @@ function keyPush(evt) {
 </div>
 
   <ul id="item_list"></ul>
-  <div><span id="score">0</span> Points</div>
+  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> </div>
 
   <button id="submit_score">Submit score</button><br>
 
