@@ -3,20 +3,20 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Test Game</title>
   <meta charset="utf-8">
-  <script src="Test%20Game_files/jquery-1.js"></script>
+  <script src="/gamingUI/templates/djangoUnchained_files/jquery-1.js"></script>
 
 
   /* global $, alert */
-<script>
+
+</head>
+<body onload="startGame()">
+  <script>
   $(document).ready( function() {
     "use strict";
 
     // These variable track the state of this "game"
     var playerItems = [];
     var points = 0;
-
-    var loc_x =  myGameArea.myGamePiece.x;
-    var loc_y =  myGameArea.myGamePiece.y;
 
     // Simulates "game over" when a score would be sent
     $("#submit_score").click( function () {
@@ -111,11 +111,8 @@
 
   });
 
-</script>
 
-</head>
-<body onload="startGame()">
-  <script>
+
 var myGamePiece;
 var myObstacles = [];
 
@@ -304,7 +301,9 @@ function updateGameArea() {
             myFinalScore.text="YOUR FINAL SCORE: " + myGameArea.myScore;
             myFinalScore.y = 0.5*myGameArea.canvas.height;
             myFinalScore.x = 0.2*myGameArea.canvas.width;
+            $(document).ready( function() {
 
+            }
 
             myFinalScore.update();
             myGameArea.stop();
