@@ -71,17 +71,18 @@
         if(evt.data.messageType === "LOAD") {
           playerItems = evt.data.gameState.playerItems;
 
-          playerXLoc = evt.data.gameState.playerX;
+
+          var playerXLoc = evt.data.gameState.playerX;
           $("#playerLocationX").text(playerXLoc)
-          playerYLoc = evt.data.gameState.playerY;
+          var playerYLoc = evt.data.gameState.playerY;
           $("#playerLocationY").text(playerYLoc)
-          stormXLoc = evt.data.gameState.stormX;
+          var stormXLoc = evt.data.gameState.stormX;
           $("#stormLocationX").text(stormXLoc)
-          stormYLoc = evt.data.gameState.stormY;
+          var stormYLoc = evt.data.gameState.stormY;
           $("#stormLocationY").text(stormYLoc)
-          stormWidth = evt.data.gameState.stormWidth;
+          var stormWidth = evt.data.gameState.stormWidth;
           $("#stormSize").text(stormWidth)
-          frameNo = evt.data.gameState.frameNo;
+          var frameNo = evt.data.gameState.frameNo;
           $("#frameNo").text(frameNo)
           points = evt.data.gameState.score;
           $("#score").text(points);
