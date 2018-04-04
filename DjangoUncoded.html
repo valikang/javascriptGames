@@ -265,6 +265,11 @@ function component(width, height, color, x, y, type) {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
+    this.setLocation = function (x, y) {
+      this.x = x;
+      this.y = y;
+
+    }
     this.newPos = function() {
     this.x += this.speedX;
     this.y += this.speedY;
