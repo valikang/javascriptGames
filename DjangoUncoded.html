@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 6</title>
+  <title>Test Game 7</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -43,6 +43,7 @@
             "stormX": parseFloat($("#stormLocationX").text()) ,
             "stormY": parseFloat($("#stormLocationY").text()) ,
             "stormWidth": parseFloat($("#stormWidth").text()) ,
+            "frameNo": parseFloat($("#frameNo").text()) ,
             "score": parseFloat($("#score").text())
           }
         };
@@ -159,6 +160,8 @@ var myGameArea = {
     },
     crash : function() {
         this.myScore = this.myScore +1;
+        var points = this.myScore;
+        $("#score").text(points);
     },
     stop : function() {
 
@@ -320,8 +323,7 @@ function updateGameArea() {
             myFinalScore.text="YOUR FINAL SCORE: " + myGameArea.myScore;
             myFinalScore.y = 0.5*myGameArea.canvas.height;
             myFinalScore.x = 0.2*myGameArea.canvas.width;
-            var points = myGameArea.myScore;
-            $("#score").text(points);
+
 
             myFinalScore.update();
             myGameArea.stop();
@@ -341,6 +343,8 @@ function updateGameArea() {
     myTime.text="TIME: " + myGameArea.frameNo / 10;
     myTime.update();
     myNextStorm.text="NEXT STORM AT: " + myGameArea.nextStorm / 10;
+    var framenumber = myGameArea.frameNo;
+    $("#frameNo").text(framenumber);
     myNextStorm.update();
 
 }
@@ -405,7 +409,7 @@ function keyPush(evt) {
 </div>
 
   <ul id="item_list"></ul>
-  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> , Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span> </div>
+  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> , Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span>, Frame Nro: <span id="frameNro">0</span>  </div>
 
   <button id="submit_score">Submit score</button><br>
 
