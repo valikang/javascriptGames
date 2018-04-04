@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 3</title>
+  <title>Test Game 5</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -107,7 +107,7 @@
       var message =  {
         messageType: "SETTING",
         options: {
-        	"width": 1200, //Integer
+        	"width": 1300, //Integer
           "height": 800 //Integer
           }
       };
@@ -217,6 +217,12 @@ function component(width, height, color, x, y, type) {
           //top
           ctx.lineTo(this.x,this.y);
           ctx.stroke(); // Draw it
+          var xloc = this.x;
+          $("#stormLocationX").text(xloc);
+          var yloc = this.y;
+          $("#stormLocationY").text(yloc);
+          var stormWidth = this.width;
+          $("#stormSize").text(stormWidth);
           //ctx.beginPath();
           //ctx.arc(this.x, this.y, 0.5*Math.sqrt(Math.pow(this.width,2)+ Math.pow(this.height,2))  , 0, 2*Math.PI);
           //ctx.stroke();
@@ -395,7 +401,7 @@ function keyPush(evt) {
 </div>
 
   <ul id="item_list"></ul>
-  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> </div>
+  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> , Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span> </div>
 
   <button id="submit_score">Submit score</button><br>
 
