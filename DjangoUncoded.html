@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 9</title>
+  <title>Test Game 11</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -69,7 +69,7 @@
       // wants to send (displays them as an alert).
       window.addEventListener("message", function(evt) {
         if(evt.data.messageType === "LOAD") {
-          playerItems = evt.data.gameState.playerItems;
+
 
 
           var playerXLoc = evt.data.gameState.playerX;
@@ -86,8 +86,8 @@
           $("#frameNo").text(frameNo)
           points = evt.data.gameState.score;
           $("#score").text(points);
-          updategameState()
-          updateItems();
+          updateGameState()
+
         } else if (evt.data.messageType === "ERROR") {
           alert(evt.data.info);
         }
@@ -135,9 +135,15 @@
 
     });
 
-function updategameState(){
+function updateGameState(){
   myGameArea.myScore = $("#score");
-
+  myGameArea.myGamePiece.x = $("#playerLocationX");
+  myGameArea.myGamePiece.y = $("#playerLocationY");
+  myGameArea.myStorm.x = $("#playerLocationX");
+  myGameArea.myStorm.y = $("#playerLocationY");
+  myGameArea.myStorm.width = $("#stormSize");
+  myGameArea.myStorm.height = myGameArea.myStorm.width/1.5;
+  myGameArea.frameNo = $("#frameNo");
 
 }
 
