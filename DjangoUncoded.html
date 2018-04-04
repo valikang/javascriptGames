@@ -3,9 +3,10 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Test Game</title>
   <meta charset="utf-8">
-  <script src="djangoUnchained_files/jquery-1.js"></script>
+  <script src="/gamingUI/templates/djangoUnchained_files/jquery-1.js"></script>
 
 
+  /* global $, alert */
 <script>
   $(document).ready( function() {
     "use strict";
@@ -13,6 +14,9 @@
     // These variable track the state of this "game"
     var playerItems = [];
     var points = 0;
+
+    var loc_x =  myGameArea.myGamePiece.x;
+    var loc_y =  myGameArea.myGamePiece.y;
 
     // Simulates "game over" when a score would be sent
     $("#submit_score").click( function () {
@@ -99,8 +103,8 @@
     var message =  {
       messageType: "SETTING",
       options: {
-      	"width": 1200, //Integer
-        "height": 800 //Integer
+      	"width": 700, //Integer
+        "height": 300 //Integer
         }
     };
     window.parent.postMessage(message, "*");
@@ -375,19 +379,14 @@ function keyPush(evt) {
 
   </script>
   <div style="text-align:center;width:480px;">
+    <!--
   <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
   <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
   <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
   <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+  -->
 </div>
 
-<!--
-  <button id="add_item">Add a stone to backbag</button>
-  <button id="add_points">Add 10 points</button>
-
-
-
-  <h3>Backbag</h3>
   <ul id="item_list"></ul>
   <div><span id="score">0</span> Points</div>
 
@@ -396,7 +395,7 @@ function keyPush(evt) {
   <button id="save">Save</button>
   <button id="load">Load</button>
 
--->
+
 
 
 </body></html>
