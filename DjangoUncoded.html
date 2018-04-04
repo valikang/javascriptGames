@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 7</title>
+  <title>Test Game 8</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
-  /* global $, alert */
+
 <script>
 
-
+  /* global $, alert */
 
   </script>
 
@@ -343,6 +343,8 @@ function updateGameArea() {
     myTime.text="TIME: " + myGameArea.frameNo / 10;
     myTime.update();
     myNextStorm.text="NEXT STORM AT: " + myGameArea.nextStorm / 10;
+    var nextstormi = myGameArea.nextStorm;
+    $("#nextStorm").text(nextstormi);
     var framenumber = myGameArea.frameNo;
     $("#frameNo").text(framenumber);
     myNextStorm.update();
@@ -409,8 +411,8 @@ function keyPush(evt) {
 </div>
 
   <ul id="item_list"></ul>
-  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> , Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span>, Frame Nro: <span id="frameNo">0</span>  </div>
-
+  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span></div>
+  <div> Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span>,  Next Storm: <span id="nextStorm">0</span> Frame Nro: <span id="frameNo">0</span> </div>
   <button id="submit_score">Submit score</button><br>
 
   <button id="save">Save</button>
