@@ -26,7 +26,7 @@
       $("#submit_score").click( function () {
         var msg = {
           "messageType": "SCORE",
-          "score": parseFloat(myGameArea.myScore.text())
+          "score": parseFloat(myGameArea.myScore)
           //"score": parseFloat($("#score").text())
         };
         window.parent.postMessage(msg, "*");
