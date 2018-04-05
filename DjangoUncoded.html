@@ -70,7 +70,7 @@
       window.addEventListener("message", function(evt) {
         if(evt.data.messageType === "LOAD") {
 
-          
+
 
           var playerXLoc = evt.data.gameState.playerX;
           $("#playerLocationX").text(playerXLoc)
@@ -141,7 +141,7 @@ function updateGameState(){
 
   myGamePiece.setLocation( parseFloat($("#playerLocationX").text()),parseFloat($("#playerLocationY").text()) );
 
-  myStorm.setLocation(parseFloat($("#stormX").text()),parseFloat($("#stormY").text()));
+  myStorm.setLocation(parseFloat($("#stormLocationX").text()),parseFloat($("#stormLocationY").text()));
 
   myStorm.width = parseFloat($("#stormSize").text() );
   myStorm.height = myStorm.width/1.5;
@@ -363,6 +363,7 @@ function updateGameArea() {
           }
        }
    }
+
     myStorm.update();
 
     myGamePiece.newPos();
