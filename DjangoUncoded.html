@@ -136,8 +136,8 @@
     });
 
 function updateGameState(){
-  myGameArea.myScore = Math.floor($("#score"));
-  myGameArea.frameNo = Math.floor($("#frameNo"));
+  myGameArea.myScore = parseFloat($("#score").text());
+  myGameArea.frameNo =  parseFloat($("#frameNo").text()); 
 
 
 
