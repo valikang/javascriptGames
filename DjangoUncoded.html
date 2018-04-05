@@ -141,7 +141,7 @@
 function updateGameState(){
   myGameArea.myScore = parseFloat($("#score").text());
   myGameArea.frameNo =  parseFloat($("#frameNo").text());
-  myHealth = parseFloat($("#health").text());
+  myGameArea.myHealth = parseFloat($("#health").text());
   myGamePiece.setLocation( parseFloat($("#playerLocationX").text()),parseFloat($("#playerLocationY").text()) );
 
   myStorm.setLocation(parseFloat($("#stormLocationX").text()),parseFloat($("#stormLocationY").text()));
