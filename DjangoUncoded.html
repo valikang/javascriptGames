@@ -139,10 +139,10 @@ function updateGameState(){
   myGameArea.myScore = parseFloat($("#score").text());
   myGameArea.frameNo =  parseFloat($("#frameNo").text());
 
-
+  myGamePiece.setLocation( parseFloat($("#playerLocationX")),parseFloat($("#playerLocationY")) );
 
   myGameArea.myStorm.setLocation($("#stormX"),$("#stormY"));
-  myGameArea.myGamePiece.setLocation($("#playerLocationX"),$("#playerLocationY"));
+
   myGameArea.myStorm.width = $("#stormSize");
   myGameArea.myStorm.height = myGameArea.myStorm.width/1.5;
 
