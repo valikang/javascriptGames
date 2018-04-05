@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 16</title>
+  <title>Test Game 17</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -39,7 +39,7 @@
           "messageType": "SAVE",
           "gameState": {
             "playerX": parseFloat($("#playerLocationX").text()) ,
-            "playerX": parseFloat($("#playerLocationY").text()) ,
+            "playerY": parseFloat($("#playerLocationY").text()) ,
             "stormX": parseFloat($("#stormLocationX").text()) ,
             "stormY": parseFloat($("#stormLocationY").text()) ,
             "stormWidth": parseFloat($("#stormSize").text()) ,
@@ -141,10 +141,10 @@ function updateGameState(){
 
   myGamePiece.setLocation( parseFloat($("#playerLocationX")),parseFloat($("#playerLocationY")) );
 
-  myGameArea.myStorm.setLocation($("#stormX"),$("#stormY"));
+  myStorm.setLocation($("#stormX"),$("#stormY"));
 
-  myGameArea.myStorm.width = $("#stormSize");
-  myGameArea.myStorm.height = myGameArea.myStorm.width/1.5;
+  myStorm.width = $("#stormSize");
+  myStorm.height = myGameArea.myStorm.width/1.5;
 
 
 }
