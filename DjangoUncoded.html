@@ -139,11 +139,11 @@ function updateGameState(){
   myGameArea.myScore = parseFloat($("#score").text());
   myGameArea.frameNo =  parseFloat($("#frameNo").text());
 
-  myGamePiece.setLocation( parseFloat($("#playerLocationX")),parseFloat($("#playerLocationY")) );
+  myGamePiece.setLocation( parseFloat($("#playerLocationX").text()),parseFloat($("#playerLocationY").text()) );
 
-  myStorm.setLocation($("#stormX"),$("#stormY"));
+  myStorm.setLocation(parseFloat($("#stormX").text()),parseFloat($("#stormY").text()));
 
-  myStorm.width = $("#stormSize");
+  myStorm.width = parseFloat($("#stormSize").text() );
   myStorm.height = myGameArea.myStorm.width/1.5;
 
 
@@ -160,7 +160,7 @@ function startGame() {
     var myDimension = 1200
     myStorm = new component(1.2*myDimension,0.8*myDimension, "blue", 0.2*myDimension, 0.05*myDimension,"storm");
     myGamePiece = new component(30, 30, "red", 0.5*myDimension, 0.25*myDimension);
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myScoreText = new component("30px", "Consolas", "black", 280, 40, "text");
     myFinalScore = new component("60px", "Consolas", "black", 500, 100, "text");
     myTime = new component("30px", "Consolas", "black", 80, 40, "text");
     myNextStorm = new component("30px", "Consolas", "black", 80, 80, "text");
@@ -368,8 +368,8 @@ function updateGameArea() {
     myGamePiece.newPos();
     myGamePiece.update();
     //myObstacle.update();
-    myScore.text="SCORE: " + myGameArea.myScore;
-    myScore.update();
+    myScoreText.text="SCORE: " + myGameArea.myScore;
+    myScoreText.update();
     myHealth.text="HEALTH: " + myGameArea.myHealth;
     myHealth.update();
     myTime.text="TIME: " + myGameArea.frameNo / 10;
