@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Test Game 19</title>
+  <title>Test Game 20</title>
   <meta charset="utf-8">
   <script src="Test%20Game_files/jquery-1.js"></script>
 
@@ -40,6 +40,7 @@
           "gameState": {
             "playerX": parseFloat($("#playerLocationX").text()) ,
             "playerY": parseFloat($("#playerLocationY").text()) ,
+            "playerHealth": parseFloat($("#health").text()) ,
             "stormX": parseFloat($("#stormLocationX").text()) ,
             "stormY": parseFloat($("#stormLocationY").text()) ,
             "stormWidth": parseFloat($("#stormSize").text()) ,
@@ -76,6 +77,8 @@
           $("#playerLocationX").text(playerXLoc)
           var playerYLoc = evt.data.gameState.playerY;
           $("#playerLocationY").text(playerYLoc)
+          var playerhealtti = evt.data.gameState.playerHealth;
+          $("#health").text(playerhealtti)
           var stormXLoc = evt.data.gameState.stormX;
           $("#stormLocationX").text(stormXLoc)
           var stormYLoc = evt.data.gameState.stormY;
@@ -138,7 +141,7 @@
 function updateGameState(){
   myGameArea.myScore = parseFloat($("#score").text());
   myGameArea.frameNo =  parseFloat($("#frameNo").text());
-
+  myHealth = parseFloat($("#health").text());
   myGamePiece.setLocation( parseFloat($("#playerLocationX").text()),parseFloat($("#playerLocationY").text()) );
 
   myStorm.setLocation(parseFloat($("#stormLocationX").text()),parseFloat($("#stormLocationY").text()));
@@ -373,6 +376,8 @@ function updateGameArea() {
     myScoreText.update();
     myHealth.text="HEALTH: " + myGameArea.myHealth;
     myHealth.update();
+    var healtti = myGameArea.myHealth;
+    $("#health").text(healtti);
     myTime.text="TIME: " + myGameArea.frameNo / 10;
     myTime.update();
     myNextStorm.text="NEXT STORM AT: " + myGameArea.nextStorm / 10;
@@ -444,7 +449,7 @@ function keyPush(evt) {
 </div>
 
   <ul id="item_list"></ul>
-  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span></div>
+  <div><span id="score">0</span> Points, Player location: <span id="playerLocationX">0</span> , <span id="playerLocationY">0</span> , Health <span id="health">0</span></div>
   <div> Storm location   <span id="stormLocationX">0</span> , <span id="stormLocationY">0</span> and size <span id="stormSize">0</span>,  Next Storm: <span id="nextStorm">0</span> Frame Nro: <span id="frameNo">0</span> </div>
   <button id="submit_score">Submit score</button><br>
 
