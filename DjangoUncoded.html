@@ -148,7 +148,7 @@ function updateGameState(){
 
   myStorm.width = parseFloat($("#stormSize").text() );
   myStorm.height = myStorm.width/1.5;
-
+  myGameArea.stop();
 
 }
 
@@ -187,6 +187,9 @@ var myGameArea = {
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    continue : function() {
+        this.interval = setInterval(updateGameArea, 20);
     },
     crash : function() {
         this.myScore = this.myScore +1;
